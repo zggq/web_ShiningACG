@@ -1,0 +1,1 @@
+declare module "*.css";//解决css文件导入ts文件报错问题

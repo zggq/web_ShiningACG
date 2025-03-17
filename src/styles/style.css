@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Komigo"; /* 设置字体名称 */
+  src: url("../assets/fonts/2/Komigo3DRegular-rg1lK.ttf") format("truetype"); /* 设置字体文件路径 */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Firstfont"; /* 设置字体名称 */
+  src: url("/src/assets/fonts/1/1.ttf") format("truetype"); /* 设置字体文件路径 */
+  font-weight: normal;
+  font-style: normal;
+}
