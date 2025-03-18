@@ -1,10 +1,7 @@
 <template>
-    <main class="content-container">
+  <main class="content-container">
     <!-- 循环每个活动 -->
-    <div
-      
-      class="activity-item"
-    >
+    <div class="activity-item">
       <!-- 文字区域 -->
       <div class="text-content">
         <h2 class="activity-title">{{ information.part }}</h2>
@@ -14,7 +11,9 @@
       <!-- 图片画廊 -->
       <div class="image-gallery">
         <img
-          loading="lazy"
+          v-lazy="imgPath"
+          :data-srcset="`${imgPath}?width=400 400w, ${imgPath}?width=800 800w`"
+          sizes="(max-width: 600px) 300px, 800px"
           v-for="(imgPath, imgIndex) in information.img"
           :key="imgIndex"
           :src="imgPath"
@@ -41,12 +40,12 @@
     </Teleport>
     <!-- 返回顶部按钮 -->
     <Teleport to="body">
-    <transition name="fade">
-      <button v-show="showBackTop" class="back-top" @click="scrollToTop">
-        ↑
-      </button>
-    </transition>
-  </Teleport>
+      <transition name="fade">
+        <button v-show="showBackTop" class="back-top" @click="scrollToTop">
+          ↑
+        </button>
+      </transition>
+    </Teleport>
   </main>
 </template>
 
@@ -54,8 +53,8 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { debounce } from 'lodash-es';
-gsap.registerPlugin(ScrollToPlugin)
+import { debounce } from "lodash-es";
+gsap.registerPlugin(ScrollToPlugin);
 const showBackTop = ref(false);
 // 定义props类型
 interface Part {
@@ -80,9 +79,8 @@ const closeLightbox = () => {
 };
 // 滚动处理
 const handleScroll = debounce(() => {
-  showBackTop.value = window.scrollY >100;
+  showBackTop.value = window.scrollY > 100;
   console.log(showBackTop.value);
-  
 }, 100);
 
 // 返回顶部动画
@@ -131,7 +129,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
   color: #101010;
   line-height: 1.6;
   font-size: 1.6rem;
-  font-family: 'Firstfont';
+  font-family: "Firstfont";
 }
 
 /* 图片画廊 */
@@ -142,7 +140,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 }
 
 .gallery-image {
-  width:39vw;
+  width: 39vw;
   /* height: 220px; */
   object-fit: cover;
   border-radius: 4px;
@@ -179,8 +177,6 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
   transform: translateY(-3px);
   background: #66b1ff;
 }
-
-
 
 /* 遮罩层样式 */
 .lightbox {

@@ -21,10 +21,10 @@ function jumpRoute(nav: string, index: number) {
 }
 function enterDepartment() {
   showSubnav.value = !showSubnav.value;
-  // console.log(1);
+  gsap.killTweensOf(".nav_lev2");
   gsap.set(".nav_lev2", {
-    x: -226,
-    y: 225,
+    // x: -226,
+    // y: 225,
     scale: 0.5,
     opacity: 0.2,
     transformOrigin: "top center",
@@ -32,6 +32,7 @@ function enterDepartment() {
   gsap.to(".nav_lev2", {
     scale: 1,
     opacity: 1,
+    ease:"back.out(1.7)"
   });
 }
 // 动态添加需要缓存的组件
@@ -66,32 +67,29 @@ watch(
         @click="index === 1 ? enterDepartment() : jumpRoute(nav.path, index)"
       >
         {{ nav.name }}
-      </span>
-      <div class="nav_lev2" v-show="showSubnav">
-        <div
-          v-for="(part, index) in partList"
-          :key="index"
-          class="subnav_item"
-          @click="jumpRoute('/' + part, 1)"
-        >
-          {{ part }}
+        <div class="nav_lev2" v-show="showSubnav" v-if="index === 1">
+          <div
+            v-for="(part, index) in partList"
+            :key="index"
+            class="subnav_item"
+            @click="jumpRoute('/' + part, 1)"
+          >
+            {{ part }}
+          </div>
         </div>
-      </div>
+      </span>
     </div>
   </nav>
   <RouterView v-slot="{ Component }">
-  <template v-if="$route.meta.keepAlive">
-    <keep-alive :include="cachedViews" :max="5">
-      <component
-        :is="Component"
-        :key="$route.fullPath"
-      />
-    </keep-alive>
-  </template>
-  <template v-else>
-    <component :is="Component" :key="$route.fullPath" />
-  </template>
-</RouterView>
+    <template v-if="$route.meta.keepAlive">
+      <keep-alive :include="cachedViews" :max="5">
+        <component :is="Component" :key="$route.fullPath" />
+      </keep-alive>
+    </template>
+    <template v-else>
+      <component :is="Component" :key="$route.fullPath" />
+    </template>
+  </RouterView>
 </template>
 
 <style scoped>
@@ -141,6 +139,7 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  margin-top: 10px;
 }
 .selected {
   border: 2px solid rgb(15, 135, 210);
