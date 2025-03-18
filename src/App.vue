@@ -5,6 +5,7 @@ import { useNavListStore } from "./stores/navList";
 import { usePartListStore } from "./stores/partList";
 import { ref, watch } from "vue";
 import gsap from "gsap";
+import Loading from "./components/Loading.vue";
 const { navList } = useNavListStore();
 const { partList } = usePartListStore();
 const router = useRouter();
@@ -14,17 +15,17 @@ const activeNav = ref(0);
 // 需要缓存的视图列表
 const cachedViews = ref<string[]>([]);
 function jumpRoute(nav: string, index: number) {
-  // console.log(nav);
+  console.log(nav);
   router.push({ path: nav });
   showSubnav.value = false;
+  console.log('1'+showSubnav.value);
   activeNav.value = index;
 }
 function enterDepartment() {
   showSubnav.value = !showSubnav.value;
+  console.log('2'+showSubnav.value);
   gsap.killTweensOf(".nav_lev2");
   gsap.set(".nav_lev2", {
-    // x: -226,
-    // y: 225,
     scale: 0.5,
     opacity: 0.2,
     transformOrigin: "top center",
@@ -50,6 +51,7 @@ watch(
 </script>
 
 <template>
+  <Loading/>
   <Background />
   <nav>
     <div class="img_nav">
@@ -72,9 +74,9 @@ watch(
             v-for="(part, index) in partList"
             :key="index"
             class="subnav_item"
-            @click="jumpRoute('/' + part, 1)"
+            @click.stop="jumpRoute(part.path, 1)"
           >
-            {{ part }}
+            {{ part.name }}
           </div>
         </div>
       </span>

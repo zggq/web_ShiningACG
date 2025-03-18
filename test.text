@@ -1,0 +1,80 @@
+<template>
+  <div class="loading-overlay" >
+    <div class="loading-text">
+      <span v-for="(char, index) in 'ShiningACG'" :key="index">{{ char }}</span>
+    </div>
+    <p>
+      资源加载中<span v-for="(char, index) in '......'" :key="index">{{
+        char
+      }}</span>
+    </p>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted } from "vue";
+import gsap from "gsap";
+
+onMounted(() => {
+  const chars = gsap.utils.toArray(".loading-text span");
+  console.log(chars);
+  gsap.to(chars, {
+    y: -20,
+    stagger: 0.1,
+    repeat: -1,
+    yoyo: true,
+    ease: "power1.inOut",
+  });
+  const char2 = gsap.utils.toArray("p span");
+  gsap.fromTo(
+    char2,
+    {
+      opacity: 0,
+    },
+    {
+      stagger: 0.5,
+      opacity: 1,
+      repeat: -1,
+      ease: "power1.inOut",
+      duration: 1,
+    }
+  );
+});
+</script>
+
+<style scoped>
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(123, 210, 206);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+.loading-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: #333;
+}
+
+.loading-text span {
+  font-family: "Komigo";
+  font-size: 8rem;
+  letter-spacing: 0.8rem;
+  display: inline-block;
+  user-select: none;
+}
+
+p {
+  display: inline-block;
+  font-family: "Firstfont";
+  font-size: 2rem;
+  margin: 10px;
+}
+</style>

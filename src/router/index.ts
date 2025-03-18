@@ -56,7 +56,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/宅舞",
+      path: "/Otadance",
       name: "宅舞",
       component: () => import("../pages/宅舞.vue"),
       meta: {
@@ -64,7 +64,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/视频",
+      path: "/Video",
       name: "视频",
       component: () => import("../pages/视频.vue"),
       meta: {
@@ -72,7 +72,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/网络",
+      path: "/Online",
       name: "网络",
       component: () => import("../pages/网络.vue"),
       meta: {
@@ -80,7 +80,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/活动",
+      path: "/LogiCore",
       name: "活动",
       component: () => import("../pages/活动.vue"),
       meta: {
@@ -88,7 +88,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/wota艺",
+      path: "/WOTAArt",
       name: "wota艺",
       component: () => import("../pages/wota艺.vue"),
       meta: {
@@ -96,7 +96,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/轻音",
+      path: "/Bando",
       name: "轻音",
       component: () => import("../pages/轻音.vue"),
       meta: {
@@ -104,7 +104,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/v曲",
+      path: "/Vocaloid",
       name: "v曲",
       component: () => import("../pages/v曲.vue"),
       meta: {
@@ -112,7 +112,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/模玩",
+      path: "/Model",
       name: "模玩",
       component: () => import("../pages/模玩.vue"),
       meta: {
@@ -120,7 +120,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/轻文",
+      path: "/Fictio",
       name: "轻文",
       component: () => import("../pages/轻文.vue"),
       meta: {
@@ -128,7 +128,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/音游",
+      path: "/Rhythm",
       name: "音游",
       component: () => import("../pages/音游.vue"),
       meta: {
@@ -144,7 +144,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/东方",
+      path: "/Touhou",
       name: "东方",
       component: () => import("../pages/东方.vue"),
       meta: {
@@ -152,7 +152,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/宣传",
+      path: "/Pictora",
       name: "宣传",
       component: () => import("../pages/宣传.vue"),
       meta: {
@@ -160,7 +160,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/秘书",
+      path: "/Liaison",
       name: "秘书",
       component: () => import("../pages/秘书.vue"),
       meta: {
@@ -168,7 +168,7 @@ const router = createRouter({
       },
     },
     {
-      path: "/动漫研",
+      path: "/Animeka",
       name: "动漫研",
       component: () => import("../pages/动漫研.vue"),
       meta: {
@@ -177,6 +177,10 @@ const router = createRouter({
     },
     //其他情况跳转到首页
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // 处理浏览器原生返回/前进
+    return savedPosition || { top: 0 }
+  }
 });
 
 export default router;

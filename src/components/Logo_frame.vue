@@ -41,7 +41,7 @@ for (let i = 1; i <= 16; i++) {
 }
 function routerSection(index: number) {
   // console.log(partList[index]);
-  router.push({ path: `/${partList[index]}` });
+  router.push({ path: partList[index].path });
 }
 function setupAnimations() {
   // 清除旧动画
