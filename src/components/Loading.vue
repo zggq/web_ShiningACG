@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
-
 const emit = defineEmits(["loaded"]);
 const letters = ref(["S", "h", "i", "n", "i", "n", "g", "A", "C", "G"]);
 const lettersRef = ref<HTMLElement[]>([]);
@@ -35,6 +34,7 @@ const initResourceTracking = () => {
   const images = Array.from(document.querySelectorAll("img"))
     .filter((img) => !img.complete)
     .map((img) => {
+      console.log("未加载完成的图片：" + img);
       return new Promise((resolve) => {
         img.onload = resolve;
         img.onerror = resolve;
@@ -42,7 +42,7 @@ const initResourceTracking = () => {
     });
 
   // 跟踪字体加载
-  const fontsToCheck = ["Firstfont", "隶书"];
+  const fontsToCheck = ["Firstfont", "Komigo"];
   const fontPromises = fontsToCheck.map((fontName) => {
     return document.fonts.load(`1em "${fontName}"`);
   });
@@ -58,9 +58,11 @@ const updateProgress = () => {
     resourcePromises.value.filter((p) => {
       return p instanceof Promise;
     }).length;
-
+  
   const total = resourcePromises.value.length;
   const newProgress = Math.min(100, Math.round((loadedCount / total) * 100));
+  console.log( loadedCount,total);
+  console.log("加载进度：" + newProgress);
 
   gsap.to(progress, {
     value: newProgress,
@@ -79,7 +81,7 @@ const createLoaderAnimation = () => {
       {
         y: -20,
         scale: 1.2,
-        duration: 0.2,
+        duration: 0.6,
         ease: "power2.out",
         delay: index * 0.1,
       },
@@ -89,7 +91,7 @@ const createLoaderAnimation = () => {
       {
         y: 0,
         scale: 1,
-        duration: 0.3,
+        duration: 0.9,
         ease: "bounce.out",
       },
       index * 0.1 + 0.2
