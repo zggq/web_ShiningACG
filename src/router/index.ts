@@ -177,7 +177,7 @@ const router = createRouter({
     },
     //其他情况跳转到首页
   ],
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_to, _from,savedPosition) {
     // 处理浏览器原生返回/前进
     return savedPosition || { top: 0 }
   }
