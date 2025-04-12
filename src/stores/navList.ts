@@ -12,6 +12,7 @@ export const useNavListStore = defineStore("navList", () => {
     { name: "加入我们", path: "/join" },
     { name: "联系我们", path: "/contact" },
     { name: "Q&A", path: "/Q&A" },
+    { name: "查询天气", path: "/weather" }
   ]);
   return { navList };
 });

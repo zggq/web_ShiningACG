@@ -1,5 +1,5 @@
 <template>
-  <Show  :information="activityInfo"></Show>
+  <Show :information="activityInfo"></Show>
 </template>
 
 <script setup lang="ts">

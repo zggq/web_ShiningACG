@@ -239,6 +239,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 @media (max-width: 768px) {
   .content-wrapper {
     padding: 1rem;
+    padding-top: 15vh;
   }
 
   .back-top {

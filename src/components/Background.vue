@@ -124,17 +124,6 @@ onMounted(() => {
 }
 
 
-/* 通过伪元素实现背景层 */
-/* .container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffffdc; 
-  z-index: -1; 
-} */
 
 .orb {
   position: absolute;

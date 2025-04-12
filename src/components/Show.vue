@@ -136,7 +136,6 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 
 <style scoped>
 .content-container {
-  /* position: static; */
   width: 86%;
   padding-top: 5vh;
   margin-left: 7vw;
@@ -283,6 +282,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 @media (max-width: 768px) {
   .content-wrapper {
     padding: 1rem;
+    padding-top: 15vh;
   }
 
   .back-top {

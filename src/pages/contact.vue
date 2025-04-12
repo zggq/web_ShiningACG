@@ -272,6 +272,7 @@ textarea {
 @media (max-width: 768px) {
   .contact-container {
     padding: 1rem;
+    padding-top: 15vh;
   }
 
   .contact-methods {

@@ -175,6 +175,11 @@ const router = createRouter({
         keepAlive: false, // 不缓存活动页
       },
     },
+    {
+      path: "/weather",
+      name: "weather",
+      component: () => import("../pages/weather.vue"), //路由懒加载
+    },
     //其他情况跳转到首页
   ],
   scrollBehavior(_to, _from,savedPosition) {

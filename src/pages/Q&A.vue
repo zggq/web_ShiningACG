@@ -98,7 +98,6 @@ onMounted(() => {
 .qa-container {
   max-width: 800px;
   margin: 0 auto;
-  /* padding: 2rem 1rem; */
   padding-top: 15vh;
   user-select: none;
 }
@@ -168,6 +167,7 @@ onMounted(() => {
 @media (max-width: 768px) {
   .qa-container {
     padding: 1rem;
+    padding-top: 15vh;
   }
 
   .question {

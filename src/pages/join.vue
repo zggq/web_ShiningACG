@@ -266,6 +266,8 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 @media (max-width: 768px) {
   .join-us-container {
     padding: 1rem;
+    padding-top: 15vh;
+    margin: auto;
   }
 
   .section-title {

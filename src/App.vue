@@ -105,7 +105,7 @@ nav {
   z-index: 1;
   position: fixed;
   width: 99.1%;
-  background-color: rgba(236, 244, 248, 0.91);
+  background-color: rgba(236, 244, 248, 1);
 }
 .img_nav {
   width: 165px;
