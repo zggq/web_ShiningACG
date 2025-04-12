@@ -152,7 +152,7 @@ onMounted(() => {
 }
 
 .letter {
-  font-size: 10rem;
+  font-size: 15vw;
   font-family: "Komigo";
   color: #333;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.573);
@@ -171,5 +171,10 @@ onMounted(() => {
   height: 100%;
   background: linear-gradient(90deg, rgb(123, 187, 210), rgb(52, 146, 183));
   transition: width 0.3s ease;
+}
+@media (max-width: 480px) {
+  .logo-text {
+  gap: 4px;
+}
 }
 </style>
