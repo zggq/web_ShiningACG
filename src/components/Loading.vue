@@ -58,10 +58,10 @@ const updateProgress = () => {
     resourcePromises.value.filter((p) => {
       return p instanceof Promise;
     }).length;
-  
+
   const total = resourcePromises.value.length;
   const newProgress = Math.min(100, Math.round((loadedCount / total) * 100));
-  console.log( loadedCount,total);
+  console.log(loadedCount, total);
   console.log("加载进度：" + newProgress);
 
   gsap.to(progress, {
@@ -171,10 +171,5 @@ onMounted(() => {
   height: 100%;
   background: linear-gradient(90deg, rgb(123, 187, 210), rgb(52, 146, 183));
   transition: width 0.3s ease;
-}
-@media (max-width: 480px) {
-  .logo-text {
-  gap: 4px;
-}
 }
 </style>

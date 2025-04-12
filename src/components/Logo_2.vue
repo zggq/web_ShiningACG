@@ -237,8 +237,8 @@ const handleMouseLeave = () => {
     height: 8rem;
   }
   .satellite-logo {
-    width: 3rem;
-    height: 3rem;
+    width: 5rem;
+    height: 5rem;
   }
 }
 </style>

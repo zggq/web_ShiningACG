@@ -129,7 +129,7 @@ const pauseAnimation = () => {
 
 const resumeAnimation = () => {
   // 清理旧补间
-  activeTweens.forEach(t => t.kill());
+  activeTweens.forEach((t) => t.kill());
   activeTweens.length = 0;
   // 恢复播放状态
   containerAnimation.value?.play();
@@ -176,5 +176,14 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
-
+@media (max-width: 480px) {
+  .center {
+    top: 88%;
+    left: 83%;
+  }
+  .orbit-container {
+    top: 88%;
+    left: 83%;
+  }
+}
 </style>

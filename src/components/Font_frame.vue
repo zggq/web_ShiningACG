@@ -205,10 +205,16 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .char {
-    font-size: 3.2rem;
+    font-size: 3.0rem;
   }
-  .line:first-child .char {
-    font-size: 2rem;
+  
+}
+@media (max-width: 480px) {
+  .hero-text{
+    top: 35%;
+  }
+  .line-third {
+    font-size: 1.0rem;
   }
 }
 </style>
