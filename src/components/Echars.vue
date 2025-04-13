@@ -1,9 +1,10 @@
 <template>
   <div class="forecast-section">
-    <h1>7日天气折线图</h1>
     <!-- 温度折线图 -->
+    <h1>7日天气折线图</h1>
     <div id="forecast-chart" class="chart-container"></div>
     <!-- 湿度折线图 -->
+    <h1>7日湿度折线图</h1>
     <div id="forecast-humidity-chart" class="chart-container"></div>
   </div>
 </template>
@@ -11,6 +12,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import * as echarts from "echarts";
+import { throttle } from "lodash-es";
 const loading = ref(true);
 const error = ref(null);
 const location = ref(null);
@@ -71,8 +73,7 @@ const processWeatherData = (data) => {
   forecast.value = data.daily.reduce(
     (acc, day) => {
       const dateStr = day.fxDate ? day.fxDate.slice(5).replace("-", "/") : "--";
-      console.log(dateStr);
-
+    //   console.log(dateStr);
       acc.dates.push(dateStr);
       acc.highs.push(day.tempMax || 0); // 防止空值
       acc.lows.push(day.tempMin || 0);
@@ -105,8 +106,7 @@ const init = async () => {
   try {
     loading.value = true;
     const coords = await getLocation();
-    console.log(coords);
-
+    // console.log(coords);
     await getWeatherData({
       longitude: coords.longitude.toFixed(2),
       latitude: coords.latitude.toFixed(2),
@@ -134,9 +134,10 @@ const initTemperatureChart = () => {
   const option = {
     tooltip: {
       trigger: "axis",
-      formatter: (params) => {
+      formatter: throttle(
+        (params) => {
         const dataIndex = params[0].dataIndex;
-        console.log(forecast.value.conditions[dataIndex].day);
+        // console.log(forecast.value.conditions[dataIndex].day);
         return `
           最高: ${params[0].data}°C<br/>
           最低: ${params[1].data}°C<br/>
@@ -144,6 +145,9 @@ const initTemperatureChart = () => {
         ${forecast.value.conditions[dataIndex].night}<br/>
         `;
       },
+        500,
+        { leading: true }
+      ),
     },
     xAxis: {
       type: "category",
@@ -210,19 +214,19 @@ const initHumidityChart = () => {
   if (chart) chart.dispose();
   chart = echarts.init(chartDom);
   const option = {
-    title: {
-      text: "湿度趋势",
-      left: "center",
-    },
     tooltip: {
       trigger: "axis",
-      formatter: (params) => {
-        const dataIndex = params[0].dataIndex;
-        return `
+      formatter: throttle(
+        (params) => {
+          const dataIndex = params[0].dataIndex;      
+          return `
           日期: ${forecast.value.dates[dataIndex]}<br/>
           湿度: ${params[0].data}%<br/>
         `;
-      },
+        },
+        500,
+        { leading: true }
+      ),
     },
     xAxis: {
       type: "category",

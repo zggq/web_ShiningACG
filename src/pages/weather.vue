@@ -1,3 +1,79 @@
+<template>
+  <div class="weather-container">
+    <div v-if="loading" class="loading">加载中...</div>
+    <div v-else-if="error" class="error">{{ error }}</div>
+
+    <div v-else class="weather-card">
+      <!-- 头部信息 -->
+      <div class="header">
+        <h2>{{ airQuality.station }}</h2>
+        <div class="update-time">更新于：{{ weather.updateTime }}</div>
+      </div>
+
+      <!-- 主要天气信息 -->
+      <div class="main-weather">
+        <div class="temperature-group">
+          <div class="current-temp">{{ weather.temp }}°C</div>
+          <div class="condition">{{ weather.condition }}</div>
+        </div>
+        <div class="feels-like">体感 {{ weather.feelsLike }}°C</div>
+      </div>
+
+      <!-- 详细数据网格 -->
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>湿度</label>
+          <span class="value">{{ weather.humidity }}%</span>
+        </div>
+        <div class="detail-item">
+          <label>风速</label>
+          <span class="value">{{ weather.wind }}</span>
+        </div>
+        <div class="detail-item">
+          <label>气压</label>
+          <span class="value">{{ weather.pressure }}</span>
+        </div>
+        <div class="detail-item">
+          <label>能见度</label>
+          <span class="value">{{ weather.visibility }}</span>
+        </div>
+      </div>
+
+      <!-- 空气质量板块 -->
+      <div class="air-quality" :style="{ backgroundColor: airQuality.color }">
+        <h1>空气质量指数</h1>
+        <div class="aqi-main">{{ airQuality.aqi }}</div>
+        <div class="aqi-info">
+          <span class="level">{{ airQuality.level }}级</span>
+          <span class="category">{{ airQuality.category }}</span>
+        </div>
+        <div class="pollutants-grid">
+          <div
+            v-for="(value, key) in {
+              'PM2.5': airQuality.pm2p5,
+              PM10: airQuality.pm10,
+              二氧化氮: airQuality.no2,
+              臭氧: airQuality.o3,
+              二氧化硫: airQuality.so2,
+            }"
+            :key="key"
+            class="pollutant-item"
+          >
+            <label>{{ key }} : </label>
+            <span class="value">{{ value }}</span>
+          </div>
+        </div>
+        <div class="health-advice">{{ airQuality.advice }}</div>
+      </div>
+      <Echars></Echars>
+      <button class="refresh-btn" @click="init">
+        <span class="icon">🔄</span> 
+        <span class="text">刷新数据</span>
+      </button>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted } from "vue";
 import Echars from "../components/Echars.vue";
@@ -128,82 +204,6 @@ const init = async () => {
 onMounted(init);
 </script>
 
-<template>
-  <div class="weather-container">
-    <div v-if="loading" class="loading">加载中...</div>
-    <div v-else-if="error" class="error">{{ error }}</div>
-
-    <div v-else class="weather-card">
-      <!-- 头部信息 -->
-      <div class="header">
-        <h2>{{ airQuality.station }}</h2>
-        <div class="update-time">更新于：{{ weather.updateTime }}</div>
-      </div>
-
-      <!-- 主要天气信息 -->
-      <div class="main-weather">
-        <div class="temperature-group">
-          <div class="current-temp">{{ weather.temp }}°C</div>
-          <div class="condition">{{ weather.condition }}</div>
-        </div>
-        <div class="feels-like">体感 {{ weather.feelsLike }}°C</div>
-      </div>
-
-      <!-- 详细数据网格 -->
-      <div class="detail-grid">
-        <div class="detail-item">
-          <label>湿度</label>
-          <span class="value">{{ weather.humidity }}%</span>
-        </div>
-        <div class="detail-item">
-          <label>风速</label>
-          <span class="value">{{ weather.wind }}</span>
-        </div>
-        <div class="detail-item">
-          <label>气压</label>
-          <span class="value">{{ weather.pressure }}</span>
-        </div>
-        <div class="detail-item">
-          <label>能见度</label>
-          <span class="value">{{ weather.visibility }}</span>
-        </div>
-      </div>
-
-      <!-- 空气质量板块 -->
-      <div class="air-quality" :style="{ backgroundColor: airQuality.color }">
-        <h3>空气质量指数</h3>
-        <div class="aqi-main">{{ airQuality.aqi }}</div>
-        <div class="aqi-info">
-          <span class="level">{{ airQuality.level }}级</span>
-          <span class="category">{{ airQuality.category }}</span>
-        </div>
-        <div class="pollutants-grid">
-          <div
-            v-for="(value, key) in {
-              'PM2.5': airQuality.pm2p5,
-              PM10: airQuality.pm10,
-              二氧化氮: airQuality.no2,
-              臭氧: airQuality.o3,
-              二氧化硫: airQuality.so2,
-            }"
-            :key="key"
-            class="pollutant-item"
-          >
-            <label>{{ key }} : </label>
-            <span class="value">{{ value }}</span>
-          </div>
-        </div>
-        <div class="health-advice">{{ airQuality.advice }}</div>
-      </div>
-      <Echars></Echars>
-      <button class="refresh-btn" @click="init">
-        <span class="icon">🔄</span> 
-        <span class="text">刷新数据</span>
-      </button>
-    </div>
-  </div>
-</template>
-
 <style scoped>
 /* 基础样式 */
 .weather-container {
@@ -213,7 +213,7 @@ onMounted(init);
   padding: 24px;
   padding-top: 15vh;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: "Segoe UI", system-ui;
+  font-family: 'Firstfont', sans-serif;
   width: 80%;
 }
 .loading {
@@ -291,6 +291,7 @@ onMounted(init);
 
 /* 空气质量板块 */
 .air-quality {
+  text-align: center;
   padding: 20px;
   border-radius: 12px;
   color: white;
@@ -307,7 +308,6 @@ onMounted(init);
   margin-bottom: 15px;
 }
 .level {
-  font-size: 1.2rem;
   margin-right: 10px;
 }
 .pollutants-grid {
