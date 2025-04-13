@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-
+import Echars from "../components/Echars.vue";
 // 响应式数据
 const location = ref(null);
 const weather = ref({
@@ -195,7 +195,7 @@ onMounted(init);
         </div>
         <div class="health-advice">{{ airQuality.advice }}</div>
       </div>
-
+      <Echars></Echars>
       <button class="refresh-btn" @click="init">
         <span class="icon">🔄</span> 
         <span class="text">刷新数据</span>
