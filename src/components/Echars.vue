@@ -73,7 +73,7 @@ const processWeatherData = (data) => {
   forecast.value = data.daily.reduce(
     (acc, day) => {
       const dateStr = day.fxDate ? day.fxDate.slice(5).replace("-", "/") : "--";
-    //   console.log(dateStr);
+      //   console.log(dateStr);
       acc.dates.push(dateStr);
       acc.highs.push(day.tempMax || 0); // 防止空值
       acc.lows.push(day.tempMin || 0);
@@ -136,15 +136,15 @@ const initTemperatureChart = () => {
       trigger: "axis",
       formatter: throttle(
         (params) => {
-        const dataIndex = params[0].dataIndex;
-        // console.log(forecast.value.conditions[dataIndex].day);
-        return `
+          const dataIndex = params[0].dataIndex;
+          // console.log(forecast.value.conditions[dataIndex].day);
+          return `
           最高: ${params[0].data}°C<br/>
           最低: ${params[1].data}°C<br/>
         ${forecast.value.conditions[dataIndex].day} 转
         ${forecast.value.conditions[dataIndex].night}<br/>
         `;
-      },
+        },
         500,
         { leading: true }
       ),
@@ -204,7 +204,10 @@ const initTemperatureChart = () => {
   };
   chart.setOption(option);
   // 响应式调整
-  window.addEventListener("resize", () => chart.resize());
+  window.addEventListener(
+    "resize",
+    throttle(() => chart.resize(), 500)
+  );
 };
 // 新增湿度图表配置
 const initHumidityChart = () => {
@@ -218,7 +221,7 @@ const initHumidityChart = () => {
       trigger: "axis",
       formatter: throttle(
         (params) => {
-          const dataIndex = params[0].dataIndex;      
+          const dataIndex = params[0].dataIndex;
           return `
           日期: ${forecast.value.dates[dataIndex]}<br/>
           湿度: ${params[0].data}%<br/>
@@ -275,7 +278,10 @@ const initHumidityChart = () => {
     },
   };
   chart.setOption(option);
-  window.addEventListener("resize", () => chart.resize());
+  window.addEventListener(
+    "resize",
+    throttle(() => chart.resize(), 500)
+  );
 };
 onMounted(init);
 </script>
