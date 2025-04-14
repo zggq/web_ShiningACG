@@ -289,7 +289,7 @@ onMounted(init);
 <style scoped>
 /* 新增样式 */
 .forecast-section {
-  margin: 2rem 0;
+  margin: 1rem 0;
   padding: 1.5rem;
   background: #f8f9fa;
   border-radius: 12px;

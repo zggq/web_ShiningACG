@@ -294,8 +294,8 @@ onMounted(init);
   text-align: center;
   padding: 20px;
   border-radius: 12px;
-  /* color: white; */
-  color: rgb(170, 160, 160);
+  color: white;
+  /* color: rgb(170, 160, 160); */
   margin: 20px 0;
 }
 .aqi-main {
@@ -350,6 +350,9 @@ onMounted(init);
 
 .refresh-btn {
   display: flex;
+  /* position: relative;
+  left: 50%;
+  transform: translateX(-50%); */
   min-width: 120px;
   padding: 12px;
   background: #a1c7ed;
@@ -358,7 +361,7 @@ onMounted(init);
   border-radius: 16px;
   font-size: 1rem;
   cursor: pointer;
-  margin: 0 auto;
+  margin: 0 auto ;
   text-align: center;
 }
 .refresh-btn:hover {
