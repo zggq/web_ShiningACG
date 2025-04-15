@@ -30,39 +30,42 @@ const resourcePromises = ref<Promise<any>[]>([]);
 
 // 初始化资源跟踪
 const initResourceTracking = () => {
-  // 获取所有图片元素（包括预加载的）
-  const images = Array.from(document.querySelectorAll("img"))
-    .filter((img) => !img.complete)
-    .map((img) => {
-      console.log("未加载完成的图片：" + img);
-      return new Promise((resolve) => {
-        img.onload = resolve;
-        img.onerror = resolve;
-      });
+  // 指定需要加载的图片
+  const imagePaths = [
+    '/img_logo/1.jpg',
+    ...Array.from({ length: 16 }, (_, i) => `/img_logo/2.${i + 1}.jpg`)
+  ];
+  const images = imagePaths.map((path) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = path;
+      img.onload = resolve;
+      img.onerror = resolve;
     });
+  });
 
   // 跟踪字体加载
   const fontsToCheck = ["Firstfont", "Komigo"];
   const fontPromises = fontsToCheck.map((fontName) => {
-    return document.fonts.load(`1em "${fontName}"`);
+    return document.fonts.load(`1em \"${fontName}\"`);
   });
 
   // 合并所有资源
   resourcePromises.value = [...images, ...fontPromises];
+  
+  // 监听每个资源的加载完成
+  resourcePromises.value.forEach(promise => {
+    promise.then(() => updateProgress());
+  });
 };
 
 // 更新进度条
-const updateProgress = () => {
-  const loadedCount =
-    resourcePromises.value.length -
-    resourcePromises.value.filter((p) => {
-      return p instanceof Promise;
-    }).length;
-
+const updateProgress = async () => {
+  const results = await Promise.allSettled(resourcePromises.value);
+  const loadedCount = results.filter((p) => p.status === "fulfilled" || p.status === "rejected").length;
   const total = resourcePromises.value.length;
   const newProgress = Math.min(100, Math.round((loadedCount / total) * 100));
-  console.log(loadedCount, total);
-  console.log("加载进度：" + newProgress);
+  console.log(newProgress, loadedCount, total);
 
   gsap.to(progress, {
     value: newProgress,
@@ -108,12 +111,12 @@ onMounted(async () => {
   // 监听所有资源加载
   const timeoutPromise = new Promise((resolve) => setTimeout(resolve, 10000)); // 10秒超时
 
-  await Promise.race([Promise.all(resourcePromises.value), timeoutPromise]);
+  await Promise.race([Promise.allSettled(resourcePromises.value), timeoutPromise]);
 
   // 确保进度到100%
   gsap.to(progress, {
     value: 100,
-    duration: 0.5,
+    duration: 2,
     onComplete: () => {
       isLoading.value = false;
       emit("loaded");
@@ -122,12 +125,6 @@ onMounted(async () => {
   });
 });
 
-// 监听资源变化
-onMounted(() => {
-  resourcePromises.value.forEach((p) => {
-    p.finally(updateProgress);
-  });
-});
 </script>
 
 <style scoped>
