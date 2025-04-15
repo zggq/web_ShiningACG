@@ -30,13 +30,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
-
+import {throttle} from "lodash-es";
 // 拆分文本
 const firstLineChars = ref("Shining".split(""));
 const secondLineChars = ref("ACG".split(""));
 let waveAnimation: gsap.core.Timeline | null = null;
 // 复杂麦浪动画
-const animateComplexWave = () => {
+const animateComplexWave = throttle(() => {
   // 如果已有动画正在运行，先清除
   if (waveAnimation) waveAnimation.kill();
 
@@ -86,7 +86,7 @@ const animateComplexWave = () => {
       },
       "<+=0.25"
     );
-};
+},1500)//最多1.5秒触发一次，防止动画抽搐
 onMounted(() => {
   // animateText();
   const tl = gsap.timeline();
