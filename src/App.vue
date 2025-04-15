@@ -97,7 +97,7 @@ watch(
 <style scoped>
 nav {
   border: 2px solid rgb(200, 224, 228);
-  /* margin: 0 10px; */
+  
   padding: 5px;
   border-radius: 10px;
   display: flex;
@@ -151,5 +151,17 @@ nav {
 .subnav_item:hover {
   color: rgb(15, 135, 210);
   font-weight: 800;
+}
+@media (max-width: 480px){
+  nav{
+    margin-left: -5px;
+  }
+  .img_nav{
+  width: 100px;
+  
+  }
+  .nav_text{
+    width: 80%;
+  }
 }
 </style>

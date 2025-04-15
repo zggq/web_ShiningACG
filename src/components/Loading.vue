@@ -65,7 +65,7 @@ const updateProgress = async () => {
   const loadedCount = results.filter((p) => p.status === "fulfilled" || p.status === "rejected").length;
   const total = resourcePromises.value.length;
   const newProgress = Math.min(100, Math.round((loadedCount / total) * 100));
-  console.log(newProgress, loadedCount, total);
+  console.log( loadedCount);
 
   gsap.to(progress, {
     value: newProgress,
