@@ -22,9 +22,10 @@
 import gsap from "gsap";
 import Logo1 from "../components/Logo_1.vue";
 import Logo2 from "../components/Logo_2.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted,watch } from "vue";
 import { useRouter } from "vue-router";
 import { usePartListStore } from "../stores/partList";
+import { useState } from '../stores/state';
 
 // import router from "../router";
 const { partList } = usePartListStore(); //获取部门列表
@@ -35,6 +36,7 @@ const containerAnimation = ref<gsap.core.Tween>(); // 容器旋转动画
 const orbitAnimations = ref<gsap.core.Tween[]>([]); // 子元素旋转动画
 const activeTweens: gsap.core.Tween[] = []; // 全局存储激活中的补间
 let isPaused = false; // 暂停状态变量
+const stateStore = useState();
 
 for (let i = 1; i <= 16; i++) {
   imgList.value.push(`/img_logo/2.${i}.jpg`);
@@ -144,7 +146,19 @@ const resumeAnimation = () => {
   activeTweens.push(tween);
 };
 onMounted(() => {
-  setupAnimations(); // 初始化动画
+  if(!stateStore.isLoading){
+    setupAnimations(); // 初始化动画
+  }
+  // 监听 isLoading 变化
+  const stopWatch = watch(
+    () => stateStore.isLoading,
+    (newVal) => {
+      if (!newVal) {
+        setupAnimations();
+        stopWatch(); // 避免重复初始化
+      }
+    }
+  );
 });
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="loader-container" v-show="isLoading">
+  <div class="loader-container" v-if="state.isLoading">
     <div class="logo-text">
       <span
         class="letter"
@@ -19,11 +19,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
+import {useState} from "../stores/state";
+const state = useState()
 const emit = defineEmits(["loaded"]);
 const letters = ref(["S", "h", "i", "n", "i", "n", "g", "A", "C", "G"]);
 const lettersRef = ref<HTMLElement[]>([]);
 const progress = ref(0);
-const isLoading = ref(true);
+// const isLoading = ref(true);
 
 // 存储所有资源 Promise
 const resourcePromises = ref<Promise<any>[]>([]);
@@ -118,7 +120,7 @@ onMounted(async () => {
     value: 100,
     duration: 2,
     onComplete: () => {
-      isLoading.value = false;
+      state.isLoading = false;
       emit("loaded");
       loaderTimeline.kill();
     },

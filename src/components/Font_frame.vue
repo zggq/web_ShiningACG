@@ -21,16 +21,20 @@
     </div>
     <!-- 第三行 -->
     <div class="line line-third">
-      <span class="char" style="font-size: 80px;"><span style="color: rgba(219, 4, 4, 0.953);">晒你</span>动漫社</span><br>
+      <span class="char" style="font-size: 80px"
+        ><span style="color: rgba(219, 4, 4, 0.953)">晒你</span>动漫社</span
+      ><br />
       <span class="char">点击部门<span class="logo">logo</span>查看详情</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted,watch } from "vue";
 import gsap from "gsap";
-import {throttle} from "lodash-es";
+import { throttle } from "lodash-es";
+import { useState } from '../stores/state';
+const stateStore = useState();
 // 拆分文本
 const firstLineChars = ref("Shining".split(""));
 const secondLineChars = ref("ACG".split(""));
@@ -86,11 +90,10 @@ const animateComplexWave = throttle(() => {
       },
       "<+=0.25"
     );
-},1500)//最多1.5秒触发一次，防止动画抽搐
-onMounted(() => {
-  // animateText();
-  const tl = gsap.timeline();
+}, 1500); //最多1.5秒触发一次，防止动画抽搐
 
+function setupAnimations() {
+  const tl = gsap.timeline();
   // 第一行动画：缩放淡入
   tl.fromTo(
     ".line-first .char",
@@ -110,7 +113,6 @@ onMounted(() => {
       force3D: true, // 启用硬件加速
     }
   );
-
   // 第二行动画：下落弹跳
   tl.fromTo(
     ".line-second .char",
@@ -126,7 +128,6 @@ onMounted(() => {
       ease: "bounce.out", // 弹跳函数
     }
   );
-
   // 第三行动画：淡入
   tl.fromTo(
     ".line-third .char",
@@ -138,12 +139,25 @@ onMounted(() => {
       duration: 0.6,
     }
   );
+}
+onMounted(() => {
+  if(!stateStore.isLoading){
+    setupAnimations(); // 初始化动画
+  }
+  // 监听 isLoading 变化
+  const stopWatch = watch(
+    () => stateStore.isLoading,
+    (newVal) => {
+      if (!newVal) {
+        setupAnimations();
+        stopWatch(); // 避免重复初始化
+      }
+    }
+  );
 });
 </script>
 
 <style scoped>
-
-
 /* 更新样式 */
 .hero-text {
   position: fixed;
@@ -205,16 +219,15 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .char {
-    font-size: 3.0rem;
+    font-size: 3rem;
   }
-  
 }
 @media (max-width: 480px) {
-  .hero-text{
+  .hero-text {
     top: 35%;
   }
   .line-third {
-    font-size: 1.0rem;
+    font-size: 1rem;
   }
 }
 </style>
