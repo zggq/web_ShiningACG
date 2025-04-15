@@ -294,7 +294,7 @@ onMounted(init);
   text-align: center;
   padding: 20px;
   border-radius: 12px;
-  color: white;
+  color: rgb(170, 160, 160);
   /* color: rgb(170, 160, 160); */
   margin: 20px 0;
 }
