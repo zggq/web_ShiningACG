@@ -165,24 +165,24 @@ onMounted(() => {
 <style>
 .solar-system {
   position: fixed;
-  left: 40%;
+  /* left: 40%;
   width: 50vw;
   height: 100vh;
-  z-index: -1;
+  z-index: -1; */
   user-select: none;
 }
 
 .center {
   position: absolute;
-  top: 56%;
-  left: 70%;
+  top: 56vh;
+  left: 70vw;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 .orbit-container {
   position: absolute;
-  top: 56%;
-  left: 70%;
+  top: 56vh;
+  left: 70vw;
   transform: translate(-50%, -50%);
 }
 .orbit {
@@ -192,12 +192,12 @@ onMounted(() => {
 }
 @media (max-width: 480px) {
   .center {
-    top: 88%;
-    left: 83%;
+    top: 88vh;
+    left: 83vw;
   }
   .orbit-container {
-    top: 88%;
-    left: 83%;
+    top: 88vh;
+    left: 83vw;
   }
 }
 </style>
