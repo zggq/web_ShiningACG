@@ -98,20 +98,14 @@ function updatePositions() {
     const radian = (angle * Math.PI) / 180;
     const x = radius_per * Math.cos(radian);
     const y = radius_per * Math.sin(radian);
-    console.log(x, y);
-    gsap.set(element, {
-      x: 0,
-      y: 0,
+    // console.log(x, y);
+    gsap.to(element, {
       xPercent: -50, // 设置水平平移为 -50%
       yPercent: -50, // 设置垂直平移为 -50%
-      transformOrigin: "50% 50%",
-    });
-    gsap.to(element, {
       duration: 2,
       x: x,
       y: y,
       ease: "power2.inOut",
-      delay: (15-index) * 0.05,
     });
   });
 }
