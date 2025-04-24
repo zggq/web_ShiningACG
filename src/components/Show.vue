@@ -97,7 +97,7 @@ const showBackTop = ref(false);
 interface Activity {
   name: string;
   info: string;
-  img: string[];
+  img?: string[];
 }
 defineProps<{
   information: Activity[];
