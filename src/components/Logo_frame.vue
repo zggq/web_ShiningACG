@@ -22,10 +22,10 @@
 import gsap from "gsap";
 import Logo1 from "../components/Logo_1.vue";
 import Logo2 from "../components/Logo_2.vue";
-import { ref, onMounted,watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { usePartListStore } from "../stores/partList";
-import { useState } from '../stores/state';
+import { useState } from "../stores/state";
 
 // import router from "../router";
 const { partList } = usePartListStore(); //获取部门列表
@@ -73,11 +73,11 @@ function setupAnimations() {
   updatePositions();
 }
 function updatePositions() {
+  const img_length = imgList.value.length; //图片数量
+  const num_in = Math.floor(img_length / 2); //内圈图片数量
+  const num_out = img_length - num_in; //外圈图片数量
+  const angle_base = 360 / img_length; //基角度
   gsap.utils.toArray<Element>(".orbit").forEach((element, index) => {
-    const img_length = imgList.value.length; //图片数量
-    const num_in = Math.floor(img_length / 2); //内圈图片数量
-    const num_out = img_length - num_in; //外圈图片数量
-    const angle_base = 360 / img_length; //基角度
     let angle_per = 0, //每个图片的角度
       angle = 0, //当前图片的角度
       radius_per = 0; //每个图片的半径
@@ -98,13 +98,20 @@ function updatePositions() {
     const radian = (angle * Math.PI) / 180;
     const x = radius_per * Math.cos(radian);
     const y = radius_per * Math.sin(radian);
-    // console.log(x, y);
-
+    console.log(x, y);
+    gsap.set(element, {
+      x: 0,
+      y: 0,
+      xPercent: -50, // 设置水平平移为 -50%
+      yPercent: -50, // 设置垂直平移为 -50%
+      transformOrigin: "50% 50%",
+    });
     gsap.to(element, {
       duration: 2,
       x: x,
       y: y,
       ease: "power2.inOut",
+      delay: (15-index) * 0.05,
     });
   });
 }
@@ -146,7 +153,7 @@ const resumeAnimation = () => {
   activeTweens.push(tween);
 };
 onMounted(() => {
-  if(!stateStore.isLoading){
+  if (!stateStore.isLoading) {
     setupAnimations(); // 初始化动画
   }
   // 监听 isLoading 变化
@@ -183,10 +190,11 @@ onMounted(() => {
   position: absolute;
   top: 56vh;
   left: 70vw;
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
 }
 .orbit {
   position: absolute;
+  transform-origin: 50% 50%; /* 确保以自身中心为基准 */
   transform: translate(-50%, -50%);
   cursor: pointer;
 }
