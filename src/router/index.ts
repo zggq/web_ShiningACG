@@ -16,6 +16,15 @@ const router = createRouter({
       redirect: "/home",
     },
     {
+      path: "/profile",
+      name: "个人中心",
+      component: () => import("../pages/Profile.vue"),
+      meta: {
+        keepAlive: false,
+        requiresAuth: true, // 需要登录才能访问
+      },
+    },
+    {
       path: "/activity",
       name: "activity",
       component: () => import("../pages/activity.vue"),
@@ -185,6 +194,34 @@ const router = createRouter({
   scrollBehavior(_to, _from,savedPosition) {
     // 处理浏览器原生返回/前进
     return savedPosition || { top: 0 }
+  }
+});
+
+// 全局路由守卫，检查登录状态
+router.beforeEach((to, from, next) => {
+  // 如果路由需要认证
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // 从localStorage获取用户信息
+    const userStr = localStorage.getItem('user');
+    let isLoggedIn = false;
+    
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        isLoggedIn = user.isLoggedIn;
+      } catch (e) {
+        console.error('解析用户信息失败', e);
+      }
+    }
+    
+    if (!isLoggedIn) {
+      // 未登录时重定向到首页
+      next('/');
+    } else {
+      next();
+    }
+  } else {
+    next();
   }
 });
 
