@@ -1,6 +1,6 @@
 <template>
   <div class="center-logo">
-    <img src="/img_logo/1.jpg" alt="中心Logo" />
+    <img src="/webp_logo/1.webp" alt="中心Logo" />
   </div>
 </template>
 

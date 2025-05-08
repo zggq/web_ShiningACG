@@ -53,7 +53,7 @@ const handleLogin = async () => {
     console.log('登录请求参数:', requestBody);
     
     // 实际登录请求
-    const response = await fetch('http://127.0.0.1:8787/api/auth/login', {
+    const response = await fetch('https://d1-tutorial.2604101517.workers.dev/proxy/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ const handleRegister = async () => {
     console.log('注册请求参数:', requestBody);
     
     // 实际注册请求
-    const response = await fetch('http://127.0.0.1:8787/api/auth/register', {
+    const response = await fetch('https://d1-tutorial.2604101517.workers.dev/api/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -39,7 +39,7 @@ let isPaused = false; // 暂停状态变量
 const stateStore = useState();
 
 for (let i = 1; i <= 16; i++) {
-  imgList.value.push(`/img_logo/2.${i}.jpg`);
+  imgList.value.push(`/webp_logo/2.${i}.webp`);
 }
 function routerSection(index: number) {
   // console.log(partList[index]);
